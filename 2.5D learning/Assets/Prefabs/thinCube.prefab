@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6521457567930230013}
   - component: {fileID: 3249411639340501599}
   - component: {fileID: 8509558500651618080}
+  - component: {fileID: 1155300784662309788}
   m_Layer: 3
   m_Name: thinCube
   m_TagString: Untagged
@@ -105,3 +106,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1155300784662309788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056365891847623272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1879937ff42c97f448e1e9e54a2e55f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeSpeed: 10
+  fadeAmount: 0.5
+  doFade: 0
