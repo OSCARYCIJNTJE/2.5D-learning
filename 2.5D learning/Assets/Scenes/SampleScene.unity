@@ -216,22 +216,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!143 &837488119 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 8678337291989177217, guid: 0c310cf12e64f124da0367fab164df55, type: 3}
-  m_PrefabInstance: {fileID: 1298127471}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &837488120 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6625992883764673299, guid: 0c310cf12e64f124da0367fab164df55, type: 3}
-  m_PrefabInstance: {fileID: 1298127471}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 241af27ae41ef8d4788a48ec71824a90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1298127471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -240,6 +224,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2086030933276833258, guid: 0c310cf12e64f124da0367fab164df55, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Movement
+      objectReference: {fileID: 0}
     - target: {fileID: 3560427118416312397, guid: 0c310cf12e64f124da0367fab164df55, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -284,18 +272,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8110213570086646291, guid: 0c310cf12e64f124da0367fab164df55, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.123724
+    - target: {fileID: 8068185837864516863, guid: 0c310cf12e64f124da0367fab164df55, type: 3}
+      propertyPath: m_Priority
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 8197626204300104430, guid: 0c310cf12e64f124da0367fab164df55, type: 3}
-      propertyPath: playerAim
-      value: 
-      objectReference: {fileID: 837488120}
-    - target: {fileID: 8197626204300104430, guid: 0c310cf12e64f124da0367fab164df55, type: 3}
-      propertyPath: characterController
-      value: 
-      objectReference: {fileID: 837488119}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

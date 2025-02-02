@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
 
     public PlayerInputs.MovementActions movementActions { get; private set; }
     public PlayerInputs.AimingActions aimingActions { get; private set; }
+    public PlayerInputs.SprintingActions sprintingActions { get; private set; }
 
     // Start is called before the first frame update
     private void Awake()
@@ -16,6 +17,7 @@ public class InputManager : MonoBehaviour
         inputActions = new PlayerInputs();
         movementActions = inputActions.Movement;
         aimingActions = inputActions.Aiming;
+        sprintingActions = inputActions.Sprinting;
     }
     private void OnEnable()
     {

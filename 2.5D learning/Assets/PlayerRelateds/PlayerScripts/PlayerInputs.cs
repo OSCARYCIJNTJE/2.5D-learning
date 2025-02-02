@@ -122,6 +122,34 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Sprinting"",
+            ""id"": ""41a42c53-f645-4052-ba6d-f7fa368bc801"",
+            ""actions"": [
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""b71e0381-03d0-4052-ae76-b81239d03b24"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8ded02a6-34b1-4350-99d4-1dd13c9783e0"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -132,12 +160,16 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         // Aiming
         m_Aiming = asset.FindActionMap("Aiming", throwIfNotFound: true);
         m_Aiming_Aim = m_Aiming.FindAction("Aim", throwIfNotFound: true);
+        // Sprinting
+        m_Sprinting = asset.FindActionMap("Sprinting", throwIfNotFound: true);
+        m_Sprinting_Sprint = m_Sprinting.FindAction("Sprint", throwIfNotFound: true);
     }
 
     ~@PlayerInputs()
     {
         UnityEngine.Debug.Assert(!m_Movement.enabled, "This will cause a leak and performance issues, PlayerInputs.Movement.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Aiming.enabled, "This will cause a leak and performance issues, PlayerInputs.Aiming.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Sprinting.enabled, "This will cause a leak and performance issues, PlayerInputs.Sprinting.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -287,6 +319,52 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public AimingActions @Aiming => new AimingActions(this);
+
+    // Sprinting
+    private readonly InputActionMap m_Sprinting;
+    private List<ISprintingActions> m_SprintingActionsCallbackInterfaces = new List<ISprintingActions>();
+    private readonly InputAction m_Sprinting_Sprint;
+    public struct SprintingActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public SprintingActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Sprint => m_Wrapper.m_Sprinting_Sprint;
+        public InputActionMap Get() { return m_Wrapper.m_Sprinting; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SprintingActions set) { return set.Get(); }
+        public void AddCallbacks(ISprintingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SprintingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SprintingActionsCallbackInterfaces.Add(instance);
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
+        }
+
+        private void UnregisterCallbacks(ISprintingActions instance)
+        {
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
+        }
+
+        public void RemoveCallbacks(ISprintingActions instance)
+        {
+            if (m_Wrapper.m_SprintingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ISprintingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SprintingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SprintingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public SprintingActions @Sprinting => new SprintingActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -294,5 +372,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     public interface IAimingActions
     {
         void OnAim(InputAction.CallbackContext context);
+    }
+    public interface ISprintingActions
+    {
+        void OnSprint(InputAction.CallbackContext context);
     }
 }

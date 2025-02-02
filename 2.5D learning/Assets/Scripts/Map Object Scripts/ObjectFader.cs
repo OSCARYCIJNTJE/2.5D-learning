@@ -7,7 +7,7 @@ public class ObjectFader : MonoBehaviour
     [SerializeField]private float fadeSpeed, fadeAmount;
     public float orignalOpacity { get; private set; }
     private Material material;
-    public bool doFade = false;
+    private bool doFade = false;
 
 
     void Start()
@@ -18,25 +18,46 @@ public class ObjectFader : MonoBehaviour
 
     void Update()
     {
-        FadeSetting(doFade ? 0 : orignalOpacity);
+        if (doFade)
+        {
+            FadeOut();
+        }
+        else
+        {
+            FadeIn();
+        }
+        doFade = false;
     }
 
-    void FadeSetting(float opacity)
+    public void SetFade(bool shouldFade)
     {
-        if (material == null)
+        if (doFade != shouldFade)
         {
-            Debug.LogWarning("Material is not assigned!");
-            return;
+            doFade = shouldFade;
         }
+    }
 
+    void FadeIn()
+    {
         Color currentColor = material.color;
-        float targetOpacity = (opacity == 0) ? fadeAmount : opacity;
-
         Color smoothColor = new Color(
             currentColor.r,
             currentColor.g,
             currentColor.b,
-            Mathf.Lerp(currentColor.a, targetOpacity, fadeSpeed * Time.deltaTime)
+            Mathf.Lerp(currentColor.a, orignalOpacity, fadeSpeed * Time.deltaTime)
+        );
+
+        material.color = smoothColor;
+    }
+
+    void FadeOut()
+    {
+        Color currentColor = material.color;
+        Color smoothColor = new Color(
+            currentColor.r,
+            currentColor.g,
+            currentColor.b,
+            Mathf.Lerp(currentColor.a, fadeAmount, fadeSpeed * Time.deltaTime)
         );
 
         material.color = smoothColor;

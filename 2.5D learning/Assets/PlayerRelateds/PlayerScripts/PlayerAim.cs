@@ -25,7 +25,6 @@ public class PlayerAim : MonoBehaviour
 
     private void HandleMouseAim()
     {
-        // Check if right mouse button is pressed
         if (inputManager.aimingActions.Aim.ReadValue<float>() > 0)
         {
             playerMovement.SetAimingState(true);

@@ -5,19 +5,18 @@ using UnityEngine.InputSystem.HID;
 
 public class CamSetting : MonoBehaviour
 {
-    private ObjectFader objectFader;
+    [SerializeField]private ObjectFader objectFader;
+    [SerializeField]private GameObject player;
 
-    // Update is called once per frame
     void Update()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        if (player != null)  // Fix the null check
+        if (player != null) 
         {
             Vector3 dir = player.transform.position - transform.position;
             Ray ray = new Ray(transform.position, dir);
 
             CheckingHit(ray, player);
+            Debug.DrawRay(transform.position, dir, Color.green);
         }
     }
 
@@ -25,20 +24,19 @@ public class CamSetting : MonoBehaviour
     {
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.collider.gameObject == player)
-            {
-                if (objectFader != null)
-                {
-                    objectFader.doFade = false;
-                }
-            }
-            else
+            if (hit.collider.gameObject != player)
             {
                 ObjectFader newObjectFader = hit.collider.gameObject.GetComponent<ObjectFader>();
                 if (newObjectFader != null)
                 {
-                    newObjectFader.doFade = true;
-                    objectFader = newObjectFader; // Update reference
+                    newObjectFader.SetFade(true); // Tell the object to fade
+                }
+            }
+            else
+            {
+                if (objectFader != null)
+                {
+                    objectFader.SetFade(false); // Reset fade when player is visible
                 }
             }
         }

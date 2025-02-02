@@ -7,14 +7,21 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private InputManager inputManager;
     [SerializeField] private CharacterController characterController;
-    private float playerSpeed = 5f;
+    private float playerSpeed;
+    private float sprintSpeed = 8f;
+    private float baseSpeed = 5f;
     [SerializeField] private PlayerAim playerAim;
-    public bool IsAiming { get; private set; }
+    public bool isAiming { get; private set; }
+    public bool isSprinting { get; private set; }
 
-    // Update is called once per frame
+    void Start()
+    {
+        playerSpeed = baseSpeed;
+    }
     void Update()
     {
         HandleMovement();
+        isSprinting = inputManager.sprintingActions.Sprint.ReadValue<float>() > 0.1f;
     }
 
     private void HandleMovement()
@@ -38,21 +45,30 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(moveDirection * playerSpeed * Time.deltaTime);
 
         // Rotate the player to face the direction of movement (when not aiming)
-        if (moveDirection.magnitude > 0.1f && !IsAiming)
+        if (moveDirection.magnitude > 0.1f && !isAiming)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, playerAim.rotationSpeed * Time.deltaTime);
         }
 
         // Optionally, handle aiming state if required
-        if (IsAiming)
+        if (isAiming)
         {
             
         }
+
+        if (isSprinting)
+        {
+            playerSpeed = sprintSpeed;
+        }
+        else
+        {
+            playerSpeed = baseSpeed;
+        }
     }
 
-    public void SetAimingState(bool isAiming)
+    public void SetAimingState(bool isAimingNow)
     {
-        IsAiming = isAiming; // Update aiming state for movement
+        isAiming = isAimingNow;
     }
 }

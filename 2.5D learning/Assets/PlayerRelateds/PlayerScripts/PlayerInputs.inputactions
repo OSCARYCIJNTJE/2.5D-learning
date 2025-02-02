@@ -100,6 +100,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Sprinting",
+            "id": "41a42c53-f645-4052-ba6d-f7fa368bc801",
+            "actions": [
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "b71e0381-03d0-4052-ae76-b81239d03b24",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8ded02a6-34b1-4350-99d4-1dd13c9783e0",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
