@@ -362,7 +362,9 @@
 "Assets/PlayerRelateds/PlayerScripts/PlayerAim.cs"
 "Assets/PlayerRelateds/PlayerScripts/PlayerInputs.cs"
 "Assets/PlayerRelateds/PlayerScripts/PlayerMovement.cs"
+"Assets/Scripts/GunScript.cs"
 "Assets/Scripts/Map Object Scripts/ObjectFader.cs"
+"Assets/Scripts/Target.cs"
 -langversion:9.0
 /deterministic
 /optimize+

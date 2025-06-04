@@ -6,6 +6,7 @@ public class PlayerAim : MonoBehaviour
 {
     [SerializeField] private InputManager inputManager;
     [SerializeField] private GameObject mainCameraObject;
+    [SerializeField] private LayerMask wallsLayer;
     public float rotationSpeed { get; private set; }
     public Camera mainCamera { get; private set; }
 
@@ -30,10 +31,12 @@ public class PlayerAim : MonoBehaviour
             playerMovement.SetAimingState(true);
 
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, wallsLayer))
             {
+                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
+
                 Vector3 aimDirection = (hit.point - transform.position).normalized;
-                aimDirection.y = 0; 
+                aimDirection.y = 0f; 
                 Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
